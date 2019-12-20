@@ -6,6 +6,7 @@ import com.rebiekong.aliyun.tools.service.DnsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,13 +25,16 @@ public class UpdateDnsController {
     @Autowired
     private KeyConfig keyConfig;
 
+    @Value("${com.aliyun.rebie.ddns.prefix:ddns}")
+    private String prefix;
+
     @GetMapping("/update/ddns")
     @ResponseBody
     public String update(@RequestParam("key") String key, HttpServletRequest request) {
         String ddns = keyConfig.findDnsByKey(key);
         if (ddns != null) {
             try {
-                dnsService.updateDDns(keyConfig.getDomain(), ddns + ".ddns", request.getRemoteAddr());
+                dnsService.updateDDns(keyConfig.getDomain(), ddns + "." + prefix, request.getRemoteAddr());
                 return "success";
             } catch (ClientException e) {
                 logger.error(e.getErrMsg());

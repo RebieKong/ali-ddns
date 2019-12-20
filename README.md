@@ -13,6 +13,7 @@ content in application-product.properties
 com.aliyun.rebie.ak=#place your ak#
 com.aliyun.rebie.aks=#place your ak secure#
 com.aliyun.rebie.ddns.domain=#place your domain#
+com.aliyun.rebie.ddns.prefix=#place your ddns prefix,by default is ddns#
 com.aliyun.rebie.ddns.keys.d1=#d1 key#
 com.aliyun.rebie.ddns.keys.d2=#d2 key#
 server.port=#server port#
@@ -30,9 +31,13 @@ use start.sh to start your service.
 
 ### UPDATE DDNS
 
+the ddns is `d1.prefix.domain`
+
 `curl some.domain.com/update/ddns?key=#d1 key#`
-`curl some.domain.com/update/ddns?key=#d2 key#`
+
 then ddns will locate to the ip that you request
+
+***Remember,dns has ttl that may not effect everywhere immediately.***
 
 ### OTHER
 
